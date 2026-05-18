@@ -37,4 +37,9 @@ test('Login Test', async ({ page }) => {
   await welcomePage.verifyWelcomeMessage(
     'Valrie'
   );
+  await welcomePage
+  .clickUserDropdown();
+
+await welcomePage
+  .clickAdminPanel();
 });

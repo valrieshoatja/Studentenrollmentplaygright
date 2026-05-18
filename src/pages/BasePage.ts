@@ -7,11 +7,12 @@ from '@playwright/test';
 
 export class BasePage {
 
+    // Store Playwright page
     page: Page;
 
     constructor(page: Page) {
 
-        // Store browser page
+        // Assign browser page
         this.page = page;
     }
 
@@ -21,7 +22,7 @@ export class BasePage {
 
     async clickElement(locator: string) {
 
-        // Wait for element
+        // Wait for element to be visible
         await this.page.locator(locator)
             .waitFor({
                 state: 'visible'
@@ -50,5 +51,50 @@ export class BasePage {
         // Enter text
         await this.page.locator(locator)
             .fill(text);
+    }
+
+    // ==================================================
+    // GET TEXT METHOD
+    // ==================================================
+
+    async getText(locator: string) {
+
+        // Wait for element
+        await this.page.locator(locator)
+            .waitFor({
+                state: 'visible'
+            });
+
+        // Return text
+        return await this.page
+            .locator(locator)
+            .textContent();
+    }
+
+    // ==================================================
+    // VERIFY ELEMENT VISIBLE
+    // ==================================================
+
+    async verifyElementVisible(
+        locator: string
+    ) {
+
+        // Verify element visible
+        await expect(
+            this.page.locator(locator)
+        ).toBeVisible();
+    }
+
+    // ==================================================
+    // VERIFY URL
+    // ==================================================
+
+    async verifyUrl(urlText: string) {
+
+        // Verify URL contains text
+        await expect(this.page)
+            .toHaveURL(
+                new RegExp(urlText)
+            );
     }
 }
