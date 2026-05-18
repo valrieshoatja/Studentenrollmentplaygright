@@ -10,6 +10,9 @@ from '../src/pages/WelcomePage';
 import { testData }
 from '../src/data/testData';
 
+import { AdminPage }
+from '../src/pages/AdminPage';
+
 test('Login Test', async ({ page }) => {
 
   const loginPage =
@@ -17,6 +20,8 @@ test('Login Test', async ({ page }) => {
 
   const welcomePage =
     new WelcomePage(page);
+    const adminPage =
+  new AdminPage(page);
 
   // Open home page
   await loginPage.gotoHomePage();
@@ -42,4 +47,7 @@ test('Login Test', async ({ page }) => {
 
 await welcomePage
   .clickAdminPanel();
+
+  await adminPage
+  .verifyAdminDashboardVisible();
 });
