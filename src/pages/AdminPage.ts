@@ -82,6 +82,16 @@ export class AdminPage {
         label: courseName
       });
   }
+   // ==========================================
+  // SEARCH AND SELECT USER
+  // ==========================================
+
+ async selectUser(userName: string) {
+
+  await this.page
+    .getByText(userName, { exact: true })
+    .click();
+}
 
   // ==========================================
   // CLICK ENROLL USER INSIDE POPUP
@@ -92,6 +102,29 @@ export class AdminPage {
     await this.page
       .locator('button[type="submit"]')
       .click();
+    }
+      // ==========================================
+// VERIFY SUCCESS MESSAGE
+// ==========================================
+
+async verifyUserEnrolledSuccessfully() {
+
+  // Verify popup disappears
+  await this.page
+    .getByRole('heading', {
+      name: '+ Enroll Users'
+    })
+    .waitFor({
+      state: 'hidden'
+    });
+
+  // Verify success message appears
+  await expect(
+    this.page.getByText(
+      'User enrolled successfully!'
+    )
+  ).toBeVisible();
+
   }
 
 }

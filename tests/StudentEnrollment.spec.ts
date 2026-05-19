@@ -65,11 +65,15 @@ await welcomePage
   await adminPage.selectCourse(
     testData.courseName
   );
+  await adminPage.selectCourse(testData.courseName);
+
+await adminPage.selectUser(testData.userName);
 
   // Click Enroll User inside popup
   await adminPage
     .clickPopupEnrollUserButton();
-
+    
+await adminPage.verifyUserEnrolledSuccessfully();
   
 
 });

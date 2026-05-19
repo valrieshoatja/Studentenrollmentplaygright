@@ -14,7 +14,7 @@ export const testData = {
 
     // STUDENT DETAILS USED DURING ENROLLMENT
    
-  username: 'seleka valrie',
+  userName: 'seleka VALRIE',
    userEmail:  'seleka@gmail.com',
   
     // INVALID LOGIN CREDENTIALS
