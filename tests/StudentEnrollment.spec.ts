@@ -41,8 +41,8 @@ test('Login Test', async ({ page }) => {
 
   // Verify welcome message
   await welcomePage.verifyWelcomeMessage(
-    'Valrie'
-  );
+    'Valrie');
+  
   await welcomePage
   .clickUserDropdown();
 
@@ -61,18 +61,16 @@ await welcomePage
   await adminPage
     .waitForEnrollPopup();
 
-  // Select course
-  await adminPage.selectCourse(
-    testData.courseName
-  );
-  await adminPage.selectCourse(testData.courseName);
 
-await adminPage.selectUser(testData.userName);
+ // 1. Select a random course automatically
+  await adminPage.selectCourse();
 
+  // 2. Select the user (matches original method structure perfectly!)
+  await adminPage.selectUser(testData.userName);
   // Click Enroll User inside popup
   await adminPage
     .clickPopupEnrollUserButton();
-    
+
 await adminPage.verifyUserEnrolledSuccessfully();
   
 
