@@ -13,6 +13,7 @@ from '../src/data/testData';
 import { AdminPage }
 from '../src/pages/AdminPage';
 
+
 test('Login Test', async ({ page }) => {
 
   const loginPage =
@@ -50,4 +51,25 @@ await welcomePage
 
   await adminPage
   .verifyAdminDashboardVisible();
+   await adminPage
+    .clickEnrollments();
+
+  await adminPage
+    .clickEnrollUserButton();
+
+  // Wait for popup
+  await adminPage
+    .waitForEnrollPopup();
+
+  // Select course
+  await adminPage.selectCourse(
+    testData.courseName
+  );
+
+  // Click Enroll User inside popup
+  await adminPage
+    .clickPopupEnrollUserButton();
+
+  
+
 });

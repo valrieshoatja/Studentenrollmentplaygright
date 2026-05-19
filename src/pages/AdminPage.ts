@@ -24,7 +24,74 @@ export class AdminPage {
       this.page.getByRole('heading', {
         name: ' Admin Dashboard'
       })
+         ).toBeVisible();
+ 
+        }
+  // ==========================================
+  // CLICK ENROLLMENTS
+  // ==========================================
 
-    ).toBeVisible();
+  async clickEnrollments() {
+
+    await this.page
+      .getByRole('button', {
+        name: 'Enrollments'
+      })
+      .click();
   }
+
+  // ==========================================
+  // CLICK ENROLL USER BUTTON
+  // ==========================================
+
+  async clickEnrollUserButton() {
+
+    await this.page
+      .getByRole('button', {
+        name: '+ Enroll User'
+      })
+      .click();
+
+  }
+  // ==========================================
+  // WAIT FOR ENROLL POPUP
+  // ==========================================
+
+  async waitForEnrollPopup() {
+
+    await this.page
+      .getByRole('heading', {
+        name: '+ Enroll Users'
+      })
+      .waitFor({
+        state: 'visible'
+      });
+  }
+
+  // ==========================================
+  // SELECT COURSE
+  // ==========================================
+
+  async selectCourse(
+    courseName: string
+  ) {
+
+    await this.page
+      .locator('select[required]')
+      .selectOption({
+        label: courseName
+      });
+  }
+
+  // ==========================================
+  // CLICK ENROLL USER INSIDE POPUP
+  // ==========================================
+
+  async clickPopupEnrollUserButton() {
+
+    await this.page
+      .locator('button[type="submit"]')
+      .click();
+  }
+
 }

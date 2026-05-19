@@ -14,8 +14,8 @@ export const testData = {
 
     // STUDENT DETAILS USED DURING ENROLLMENT
    
-   //tudentName: 'seleka modiba',
-   //studentEmailToEnroll:  'seleka@gmail.com',
+  username: 'seleka valrie',
+   userEmail:  'seleka@gmail.com',
   
     // INVALID LOGIN CREDENTIALS
 
@@ -23,9 +23,6 @@ export const testData = {
    //nvalidPassword:'WrongPassword123',
     
 
-    // COURSE
-
- // courseName: 'SQL'
-   
-
+  courseName: 'SQL',
 };
+   
