@@ -11,7 +11,8 @@ from '../pages/WelcomePage';
 
 import { AdminPage }
 from '../pages/AdminPage';
-
+import { HomePage }
+from '../pages/HomePage';
 // ======================================================
 // CUSTOM FIXTURES
 // ======================================================
@@ -23,6 +24,7 @@ type MyFixtures = {
     welcomePage: WelcomePage;
 
     adminPage: AdminPage;
+    homePage: HomePage;
 };
 
 export const test =

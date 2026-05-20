@@ -12,6 +12,8 @@ from '../src/data/testData';
 
 import { AdminPage }
 from '../src/pages/AdminPage';
+import { HomePage }
+from '../src/pages/HomePage';
 
 
 test('Login Test', async ({ page }) => {
@@ -23,6 +25,8 @@ test('Login Test', async ({ page }) => {
     new WelcomePage(page);
     const adminPage =
   new AdminPage(page);
+  const homePage =
+  new HomePage(page);
 
   // Open home page
   await loginPage.gotoHomePage();
@@ -80,6 +84,7 @@ await adminPage.verifyUserEnrolledSuccessfully();
   // 🌟 CLICK LOGOUT TO COMPLETE THE CYCLE
   await welcomePage
   .selectFromUserDropdown('logout');
-  
+  await homePage
+    .verifyOnHomePage();
 
 });
