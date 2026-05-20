@@ -43,11 +43,9 @@ test('Login Test', async ({ page }) => {
   await welcomePage.verifyWelcomeMessage(
     'Valrie');
   
-  await welcomePage
-  .clickUserDropdown();
 
 await welcomePage
-  .clickAdminPanel();
+  .selectFromUserDropdown('Admin Panel');
 
   await adminPage
   .verifyAdminDashboardVisible();
@@ -77,6 +75,11 @@ await adminPage.verifyUserEnrolledSuccessfully();
   
   // Optional: Confirm you are safely back on the Welcome page view
   await welcomePage.verifyWelcomeMessage('Valrie');
+
+
+  // 🌟 CLICK LOGOUT TO COMPLETE THE CYCLE
+  await welcomePage
+  .selectFromUserDropdown('logout');
   
 
 });
