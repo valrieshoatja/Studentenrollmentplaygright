@@ -4,18 +4,28 @@ from '@playwright/test';
 export class WelcomePage {
 
   constructor(private page: Page) {}
-
-  async verifyWelcomeMessage(
+async verifyWelcomeMessage(
     username: string
   ) {
 
+    // Creates a case-insensitive regular expression from whatever string is passed in
+    const nameRegex = new RegExp(`Welcome back, ${username}!`, 'i');
+
     await expect(
-
-      this.page.getByRole('heading', {
-        name: `Welcome back, ${username}!`
-      })
-
+      this.page.getByRole('heading', { name: nameRegex })
     ).toBeVisible({ timeout: 15000 });
+  }
+  async verifyEnrolledCoursesVisible(
+    count: string
+  ) {
+
+    await expect(
+      this.page.locator('div', { hasText: 'Enrolled Courses' })
+        .locator('div')
+        .filter({ hasText: count })
+        .first()
+    ).toBeVisible({ timeout: 15000 });
+  
   }
      async clickUserDropdown() {
 
@@ -29,7 +39,12 @@ export class WelcomePage {
   async selectFromUserDropdown(
     itemName: string
   ) {
-
+    if (itemName === 'Logout') {
+      this.page.once('dialog', async dialog => {
+        // This automatically clicks 'OK' when the confirmation popup shows up
+        await dialog.accept();
+      });
+    }
     // 1. Open the dropdown menu panel view layout block
     await this.clickUserDropdown();
 

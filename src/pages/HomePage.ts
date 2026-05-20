@@ -25,4 +25,12 @@ export class HomePage extends BasePage {
 
     ).toBeVisible({ timeout: 10000 });
   }
+  async clickLoginButton() {
+
+    // Target and open the sign in panel layout
+    await this.page
+      .locator('.nav-user-section button.user-pill')
+      .click();
+  }
+
 }

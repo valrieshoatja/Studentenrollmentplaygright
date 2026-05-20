@@ -1,32 +1,9 @@
-import { test }
-from '@playwright/test';
-
-import { LoginPage }
-from '../src/pages/LoginPage';
-
-import { WelcomePage }
-from '../src/pages/WelcomePage';
-
+import { test } 
+from '../src/fixtures/customFixture';
 import { testData }
 from '../src/data/testData';
 
-import { AdminPage }
-from '../src/pages/AdminPage';
-import { HomePage }
-from '../src/pages/HomePage';
-
-
-test('Login Test', async ({ page }) => {
-
-  const loginPage =
-    new LoginPage(page);
-
-  const welcomePage =
-    new WelcomePage(page);
-    const adminPage =
-  new AdminPage(page);
-  const homePage =
-  new HomePage(page);
+test('Login Test', async ({ loginPage, welcomePage, adminPage, homePage, page }) => {
 
   // Open home page
   await loginPage.gotoHomePage();
@@ -44,8 +21,7 @@ test('Login Test', async ({ page }) => {
   );
 
   // Verify welcome message
-  await welcomePage.verifyWelcomeMessage(
-    'Valrie');
+  await welcomePage.verifyWelcomeMessage(testData.AdminUserName);
   
 
 await welcomePage
@@ -78,13 +54,32 @@ await adminPage.verifyUserEnrolledSuccessfully();
   await adminPage.clickBackToWebsite();
   
   // Optional: Confirm you are safely back on the Welcome page view
-  await welcomePage.verifyWelcomeMessage('Valrie');
+ await welcomePage.verifyWelcomeMessage(testData.AdminUserName);
 
 
-  // 🌟 CLICK LOGOUT TO COMPLETE THE CYCLE
+  //  CLICK LOGOUT TO COMPLETE THE CYCLE
   await welcomePage
-  .selectFromUserDropdown('logout');
+  .selectFromUserDropdown('Logout');
   await homePage
     .verifyOnHomePage();
 
-});
+    // ==========================================
+  // 🌟 NEW STUDENT LOGIN AGENT LOOP
+  // ==========================================
+
+  // Click the public login button using the newly added action
+  await homePage
+    .clickLoginButton();
+
+  // Wait for login payload text entry field container to be visible again
+  await page.locator('#login-email').waitFor({ state: 'visible' });
+
+  // Log back into the site application space using the unique student record data keys
+  await loginPage.login(
+    testData.studentUsername,
+    testData.studentPassword
+  );
+
+  // Confirm the dashboard now properly greets the newly logged-in student user context
+  await welcomePage.verifyEnrolledCoursesVisible('1');
+  });

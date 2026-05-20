@@ -64,9 +64,17 @@ base.extend<MyFixtures>({
         await use(
             new AdminPage(page)
         );
+    },
+
+    // ==========================================
+    // HOME PAGE FIXTURE (🌟 ADD THIS MISSING BLOCK)
+    // ==========================================
+
+    homePage:
+    async ({ page }, use) => {
+
+        await use(
+            new HomePage(page)
+        );
     }
 });
-
-// Export expect
-export { expect }
-from '@playwright/test';
