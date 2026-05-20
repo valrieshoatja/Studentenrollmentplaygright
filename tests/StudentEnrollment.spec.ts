@@ -72,6 +72,11 @@ await welcomePage
     .clickPopupEnrollUserButton();
 
 await adminPage.verifyUserEnrolledSuccessfully();
+// NEW ADDITION: Navigate back to the main client web dashboard application screen
+  await adminPage.clickBackToWebsite();
+  
+  // Optional: Confirm you are safely back on the Welcome page view
+  await welcomePage.verifyWelcomeMessage('Valrie');
   
 
 });

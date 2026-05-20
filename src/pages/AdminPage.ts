@@ -85,7 +85,7 @@ async selectCourse() {
       el.dispatchEvent(new Event('input', { bubbles: true }));
     });
   }
-   // ==========================================
+  
   // ==========================================
   // SEARCH AND SELECT USER
   // ==========================================
@@ -137,7 +137,7 @@ async selectCourse() {
       .isVisible();
 
     if (isDuplicateAlert) {
-      console.log('⚠️ Notice: Student is already actively enrolled in a course. Handling gracefully.');
+      console.log(' Notice: Student is already actively enrolled in a course. Handling gracefully.');
       
       // Close the popup manually using the cancel/close button so the page state stays clean
       const cancelButton = this.page.locator('button').filter({ hasText: /cancel|close/i }).first();
@@ -157,5 +157,15 @@ async selectCourse() {
     await expect(
       this.page.getByText('User enrolled successfully!')
     ).toBeVisible({ timeout: 3000 });
+  }
+  // CLICK BACK TO WEBSITE
+  // ==========================================
+  async clickBackToWebsite() {
+    // Locate the button using its exact visible text contents
+    const backButton = this.page.getByRole('button', { name: '← Back to Website' });
+    
+    await backButton.waitFor({ state: 'visible', timeout: 5000 });
+    await backButton.click();
+    console.log('↩️ Clicked "Back to Website" button.');
   }
 }
