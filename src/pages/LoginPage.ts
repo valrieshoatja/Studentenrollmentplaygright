@@ -3,10 +3,10 @@ import { Page } from '@playwright/test';
 export class LoginPage {
 
   constructor(private page: Page) {}
+  readonly userPillButton = 'button.user-pill';
 
   async gotoHomePage() {
 
-    // Open website
     await this.page.goto(
       'https://ndosisimplifiedautomation.vercel.app/'
     );
@@ -14,8 +14,7 @@ export class LoginPage {
 
   async clickTopLoginButton() {
 
-    // Click top Login button
-    await this.page.locator('button.user-pill').click();
+    await this.page.locator(this.userPillButton).click();
   }
 
   async enterEmail(email: string) {

@@ -7,18 +7,9 @@ from '@playwright/test';
 
 export class BasePage {
 
-    // Store Playwright page
-    page: Page;
+    constructor( protected page: Page) {
 
-    constructor(page: Page) {
-
-        // Assign browser page
-        this.page = page;
     }
-
-    // ==================================================
-    // CLICK METHOD
-    // ==================================================
 
     async clickElement(locator: string) {
 

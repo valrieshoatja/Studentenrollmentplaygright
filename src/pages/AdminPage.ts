@@ -167,21 +167,6 @@ async selectCourse() {
     await backButton.waitFor({ state: 'visible', timeout: 5000 });
     await backButton.click();
     console.log('↩️ Clicked "Back to Website" button.');
-  }
-  // ==========================================
-  // CLICK USER DROPDOWN AND LOGOUT
-  // ==========================================
-  async logout() {
-    // 1. Locate and click the user pill dropdown button (showing "valrie")
-    const userPill = this.page.locator('.nav-user-section button.user-pill');
-    await userPill.waitFor({ state: 'visible', timeout: 5000 });
-    await userPill.click();
-    console.log('👤 Clicked user pill dropdown menu.');
-
-    // 2. Locate and click the Logout option inside the dropdown menu container
-    const logoutButton = this.page.locator('.nav-dropdown button.nav-dropdown-item', { hasText: 'Logout' });
-    await logoutButton.waitFor({ state: 'visible', timeout: 5000 });
-    await logoutButton.click();
-    console.log('🚪 Clicked Logout button.');
+  
   }
 }
