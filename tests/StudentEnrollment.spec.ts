@@ -40,20 +40,19 @@ await welcomePage
     .waitForEnrollPopup();
 
 
- // 1. Select a random course automatically
+ // Select a random course 
   await adminPage.selectCourse();
 
-  // 2. Select the user (matches original method structure perfectly!)
+  // Select the user 
   await adminPage.selectUser(testData.userName);
-  // Click Enroll User inside popup
   await adminPage
     .clickPopupEnrollUserButton();
 
 await adminPage.verifyUserEnrolledSuccessfully();
-// NEW ADDITION: Navigate back to the main client web dashboard application screen
+//Navigate back to the main client web dashboard application screen
   await adminPage.clickBackToWebsite();
   
-  // Optional: Confirm you are safely back on the Welcome page view
+  // Confirm you are safely back on the Welcome page view
  await welcomePage.verifyWelcomeMessage(testData.AdminUserName);
 
 
@@ -63,11 +62,9 @@ await adminPage.verifyUserEnrolledSuccessfully();
   await homePage
     .verifyOnHomePage();
 
-    // ==========================================
-  // 🌟 NEW STUDENT LOGIN AGENT LOOP
-  // ==========================================
+  
 
-  // Click the public login button using the newly added action
+  // Click the public login button 
   await homePage
     .clickLoginButton();
 

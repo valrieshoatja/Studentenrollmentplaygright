@@ -5,9 +5,6 @@ export class AdminPage {
 
   constructor(private page: Page) {}
 
-  // ==========================================
-  // VERIFY ADMIN DASHBOARD
-  // ==========================================
 
   async verifyAdminDashboardVisible() {
 
@@ -27,9 +24,7 @@ export class AdminPage {
          ).toBeVisible();
  
         }
-  // ==========================================
-  // CLICK ENROLLMENTS
-  // ==========================================
+
 
   async clickEnrollments() {
 
@@ -40,9 +35,6 @@ export class AdminPage {
       .click();
   }
 
-  // ==========================================
-  // CLICK ENROLL USER BUTTON
-  // ==========================================
 
   async clickEnrollUserButton() {
 
@@ -53,9 +45,6 @@ export class AdminPage {
       .click();
 
   }
-  // ==========================================
-  // WAIT FOR ENROLL POPUP
-  // ==========================================
 
   async waitForEnrollPopup() {
 
@@ -68,15 +57,10 @@ export class AdminPage {
       });
     }
 
-  
-  // ==========================================
-  // SELECT COURSE
-  // ==========================================
 async selectCourse() {
     const courseDropdown = this.page.locator('select[required]');
     await courseDropdown.waitFor({ state: 'visible' });
 
-    // Select a highly unique course name from your list to guarantee the form state triggers
     await courseDropdown.selectOption({ label: 'Automation Testing' });
 
     // Force the browser to notify the app that the course window selection is complete
@@ -85,10 +69,7 @@ async selectCourse() {
       el.dispatchEvent(new Event('input', { bubbles: true }));
     });
   }
-  
-  // ==========================================
-  // SEARCH AND SELECT USER
-  // ==========================================
+
   async selectUser(userName: string) {
     const searchInput = this.page.locator('input[placeholder*="Search by name or email"]').first();
     await searchInput.waitFor({ state: 'visible', timeout: 5000 });
@@ -111,25 +92,19 @@ async selectCourse() {
     await this.page.waitForTimeout(400); 
   }
 
-  // ==========================================
-  // CLICK ENROLL USER INSIDE POPUP
-  // ==========================================
   async clickPopupEnrollUserButton() {
     const submitButton = this.page.locator('button[type="submit"]', { hasText: 'Enroll User' }).first();
     await submitButton.waitFor({ state: 'visible', timeout: 5000 });
 
-    // Clean pointer click interaction
     await submitButton.click();
   }
-      // ==========================================
-// VERIFY SUCCESS MESSAGE
-// ==========================================
+
 
   async verifyUserEnrolledSuccessfully() {
-    // 1. Give the network request a brief moment to respond
+    // Give the network request a brief moment to respond
     await this.page.waitForTimeout(2000);
 
-    // 2. Check if a duplicate error or alert text is visible anywhere on screen
+    // Check if a duplicate error or alert text is visible anywhere on screen
     const isDuplicateAlert = await this.page
       .locator('div, span, p, .toast')
       .filter({ hasText: /already|exist|active enrollment/i })
@@ -149,7 +124,7 @@ async selectCourse() {
       return;
     }
 
-    // 3. Normal Path: If no error appeared, wait for the form to close and expect the success toast
+    // If no error appeared, wait for the form to close and expect the success toast
     await this.page
       .getByRole('heading', { name: '+ Enroll Users' })
       .waitFor({ state: 'hidden', timeout: 5000 });
@@ -158,15 +133,39 @@ async selectCourse() {
       this.page.getByText('User enrolled successfully!')
     ).toBeVisible({ timeout: 3000 });
   }
-  // CLICK BACK TO WEBSITE
-  // ==========================================
+  
   async clickBackToWebsite() {
-    // Locate the button using its exact visible text contents
-    const backButton = this.page.getByRole('button', { name: '← Back to Website' });
+  
+    const backButton = this.page.getByRole('button', { name: 'Back to Website' });
     
     await backButton.waitFor({ state: 'visible', timeout: 5000 });
     await backButton.click();
-    console.log('↩️ Clicked "Back to Website" button.');
+    console.log(' Clicked "Back to Website" button.');
   
   }
-}
+  // VERIFY ENROLLMENT ERROR (NEGATIVE TEST ACTION)
+
+  async verifyEnrollmentErrorVisible() {
+    const errorAlert = this.page
+      .locator('div, span, p, .toast')
+      .filter({ hasText: /already|exist|active enrollment|required/i })
+      .first();
+      
+    //check that an error tracker popped into view
+    await expect(errorAlert).toBeVisible({ timeout: 5000 });
+    
+    // Close the interactive popup window to reset screen state
+    const cancelButton = this.page.locator('button').filter({ hasText: /cancel|close/i }).first();
+    if (await cancelButton.isVisible()) {
+      await cancelButton.click();
+    }
+  }
+    async verifyPleaseSelectUserError() {
+    // 1. Target the red alert text banner that appears at the top left of the dashboard
+    const errorBanner = this.page.locator('text=Please select a user').first();
+    
+    // 2. Explicitly wait for it to show up on the screen so the test doesn't rush past it
+    await errorBanner.waitFor({ state: 'visible', timeout: 5000 });
+  }
+
+} 
