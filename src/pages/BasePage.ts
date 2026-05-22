@@ -1,12 +1,9 @@
 import { Page, expect }
 from '@playwright/test';
 
-// ======================================================
-// BASE PAGE
-// ======================================================
 
 export class BasePage {
-
+    //Accepts the active browser window and shares it with the methods below
     constructor( protected page: Page) {
 
     }
@@ -24,9 +21,7 @@ export class BasePage {
             .click();
     }
 
-    // ==================================================
-    // ENTER TEXT METHOD
-    // ==================================================
+    
 
     async enterText(
         locator: string,

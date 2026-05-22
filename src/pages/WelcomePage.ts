@@ -9,11 +9,10 @@ async verifyWelcomeMessage(
   ) {
 
     // Creates a case-insensitive regular expression from whatever string is passed in
-    const nameRegex = new RegExp(`Welcome back, ${username}!`, 'i');
-
+    const nameRegex = new RegExp(`Welcome back,\\s*${username}`, 'i');
     await expect(
       this.page.getByRole('heading', { name: nameRegex })
-    ).toBeVisible({ timeout: 15000 });
+    ).toBeVisible({ timeout: 5000 });
   }
   async verifyEnrolledCoursesVisible(
     count: string
@@ -24,43 +23,38 @@ async verifyWelcomeMessage(
         .locator('div')
         .filter({ hasText: count })
         .first()
-    ).toBeVisible({ timeout: 15000 });
+    ).toBeVisible({ timeout: 5000 });
   
   }
-     async clickUserDropdown() {
-
-    await this.page
-      .locator('button.user-pill')
-      .click();
+   async clickUserDropdown() {
+    // Looks for a button class that contains the text 'Menu' explicitly 
+    const dropdownButton = this.page.locator('button.user-pill', { hasText: 'Menu' });
+    
+    // Ensure it's ready, then execute click
+    await dropdownButton.waitFor({ state: 'visible', timeout: 5000 });
+    await dropdownButton.click({ force: true }); 
   }
 
   // REUSABLE MENU SELECTION ACTION
-  // ==========================================
-  async selectFromUserDropdown(
-    itemName: string
-  ) {
+  async selectFromUserDropdown(itemName: string) {
     if (itemName === 'Logout') {
       this.page.once('dialog', async dialog => {
-        // This automatically clicks 'OK' when the confirmation popup shows up
         await dialog.accept();
       });
     }
-    // 1. Open the dropdown menu panel view layout block
+
+    // Opens the dropdown menu panel
     await this.clickUserDropdown();
 
-    // 2. Wait for the state menu structure container overlay to render completely
-    await this.page
-      .locator('.nav-dropdown.open')
-      .waitFor({
-        state: 'visible'
-      });
+    // Locates the visible menu window context
+    const dropdownContainer = this.page.locator('.nav-dropdown.open');
+    await dropdownContainer.waitFor({ state: 'visible', timeout: 5000 });
 
-    // 3. Select and trigger pointer events on the target option based on passed text name
-    await this.page
-      .getByRole('button', {
-        name: itemName
-      })
-      .click();
+    // Finds the matching element matching your instruction text string
+    const targetButton = dropdownContainer
+      .locator('button')
+      .filter({ has: this.page.locator('span', { hasText: new RegExp(`^${itemName}$`, 'i') }) });
+
+    await targetButton.click();
   }
-
 }

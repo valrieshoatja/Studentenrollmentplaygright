@@ -4,7 +4,7 @@ import { testData } from '../src/data/testData';
 
 test.describe('Negative StudentEnrollment Tests', () => {
 
-  // 🌟 TEST 1: THE INVALID LOGIN TEST
+  // THE INVALID LOGIN TEST
   test('Should display error with invalid login credentials', async ({ loginPage, page }) => {
     await loginPage.gotoHomePage();
     await loginPage.clickTopLoginButton();
@@ -20,14 +20,14 @@ test.describe('Negative StudentEnrollment Tests', () => {
   });
 
 
-  // 🌟 TEST 2: THE MISSING USER ENROLLMENT TEST
+  //  THE MISSING USER ENROLLMENT TEST
   test('Should not allow enrolling a student without selecting a user', async ({ loginPage, welcomePage, adminPage, page }) => {
     // 1. Complete standard admin login
     await loginPage.gotoHomePage();
     await loginPage.clickTopLoginButton();
     await loginPage.login(testData.adminUsername, testData.adminPassword);
 
-    // 2. Open the Enroll User Popup Modals
+    // Open the Enroll User Popup Modals
     await welcomePage.selectFromUserDropdown('Admin Panel');
     await adminPage.verifyAdminDashboardVisible();
     await adminPage.clickEnrollments();
@@ -44,11 +44,9 @@ test.describe('Negative StudentEnrollment Tests', () => {
     //  Verify the validation error message appears at the back
     await adminPage.verifyPleaseSelectUserError();
 
-    //  Assert that the popup modal window did NOT disappear (it stays visible)
+    //  Assert that the popup window did NOT disappear (it stays visible)
     const modalWindow = page.locator('text=Enroll Users').first();
     await expect(modalWindow).toBeVisible();
-
-    // Pause for 5 seconds so you can visually watch the red banner stay on screen!
     await page.waitForTimeout(5000);
 
     // Clean up: Close modal

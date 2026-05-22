@@ -13,9 +13,6 @@ import { AdminPage }
 from '../pages/AdminPage';
 import { HomePage }
 from '../pages/HomePage';
-// ======================================================
-// CUSTOM FIXTURES
-// ======================================================
 
 type MyFixtures = {
 
@@ -26,13 +23,9 @@ type MyFixtures = {
     adminPage: AdminPage;
     homePage: HomePage;
 };
-
+//It put all of our Page Objects together so that when we write an actual test file, our pages are automatically loaded and ready to use without us having to type
 export const test =
 base.extend<MyFixtures>({
-
-    // ==========================================
-    // LOGIN PAGE FIXTURE
-    // ==========================================
 
     loginPage:
     async ({ page }, use) => {
@@ -42,9 +35,6 @@ base.extend<MyFixtures>({
         );
     },
 
-    // ==========================================
-    // WELCOME PAGE FIXTURE
-    // ==========================================
 
     welcomePage:
     async ({ page }, use) => {
@@ -54,9 +44,7 @@ base.extend<MyFixtures>({
         );
     },
 
-    // ==========================================
-    // ADMIN PAGE FIXTURE
-    // ==========================================
+   
 
     adminPage:
     async ({ page }, use) => {
@@ -66,9 +54,6 @@ base.extend<MyFixtures>({
         );
     },
 
-    // ==========================================
-    // HOME PAGE FIXTURE (🌟 ADD THIS MISSING BLOCK)
-    // ==========================================
 
     homePage:
     async ({ page }, use) => {
